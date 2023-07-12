@@ -1,1 +1,1 @@
-# ec-test-02
+# Palindrome checker
