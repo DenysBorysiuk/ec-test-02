@@ -16,7 +16,6 @@ const Slider = ({
   component: Component,
   section,
 }: SliderProps) => {
-  const slidesPerView = section === 'reviews' ? 'auto' : 2;
   return (
     <>
       <Swiper
@@ -27,54 +26,39 @@ const Slider = ({
         modules={[Navigation, Pagination]}
         speed={800}
         pagination={{ clickable: true }}
+        navigation={{
+          nextEl: `.button-next-${section}`,
+          prevEl: `.button-prev-${section}`,
+        }}
         breakpoints={{
           320: {
             slidesPerView: 1,
-            // pagination: true,
-            // pagination: {
-            //   // el: '.swiper-pagination',
-            //   // type: 'bullets',
-            //   clickable: true,
-            // },
           },
           768: {
             slidesPerView: 2,
             spaceBetween: 16,
-            pagination: false,
-            navigation: {
-              nextEl: `.button-next-${section}`,
-              prevEl: `.button-prev-${section}`,
-            },
           },
           1280: {
-            pagination: false,
             slidesPerView: 3,
             spaceBetween: 24,
-            navigation: {
-              nextEl: `.button-next-${section}`,
-              prevEl: `.button-prev-${section}`,
-            },
           },
         }}
-
-        //   onSlideChange={() => console.log('slide change')}
-        //   onSwiper={swiper => console.log(swiper)}
       >
+        <div className="hidden md:flex md:gap-[24px]">
+          <button className={`button-prev-${section} bg-slate-500`} type="button">
+            prev
+          </button>
+          <button className={`button-next-${section} bg-slate-500`} type="button">
+            next
+          </button>
+        </div>
+
         {data?.map((item, idx) => (
           <SwiperSlide tag="li" key={idx} className={`${slideClassName}`}>
             <Component data={item} />
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <div className="flex gap-[24px]">
-        <button className={`button-prev-${section} bg-slate-500`} type="button">
-          prev
-        </button>
-        <button className={`button-next-${section} bg-slate-500`} type="button">
-          next
-        </button>
-      </div>
     </>
   );
 };
