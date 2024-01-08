@@ -26,11 +26,11 @@ const Slider = ({
         loop={true}
         modules={[Navigation, Pagination]}
         speed={800}
-        pagination={true}
+        pagination={{ clickable: true }}
         breakpoints={{
           320: {
             slidesPerView: 1,
-            pagination: true,
+            // pagination: true,
             // pagination: {
             //   // el: '.swiper-pagination',
             //   // type: 'bullets',
