@@ -1,9 +1,7 @@
 export type SliderProps = {
-  direction?: 'horizontal' | 'vertical';
-  slidesPerView: number;
-  pagination?: boolean;
-  navigation?: boolean;
   data: any[];
   className?: string;
+  slideClassName?: string;
   component: any;
+  section: 'about' | 'services' | 'gallery' | 'reviews';
 };

@@ -15,3 +15,27 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .swiper-pagination {
+    position: static !important;
+    margin-top: 24px;
+    line-height: 0;
+  }
+
+  .swiper-pagination-bullet {
+    background: #222 !important;
+    opacity: 0.25 !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #222 !important;
+    opacity: 1 !important;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .swiper-slide.reviews-slide {
+    width: 346px !important;
+  }
+}
