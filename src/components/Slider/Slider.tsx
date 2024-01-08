@@ -47,6 +47,7 @@ const Slider = ({
             },
           },
           1280: {
+            pagination: false,
             slidesPerView: 3,
             spaceBetween: 24,
           },
@@ -62,7 +63,7 @@ const Slider = ({
         ))}
       </Swiper>
 
-      <div className="flex gap-[24px] z-10">
+      <div className="flex gap-[24px]">
         <button className={`button-prev-${section} bg-slate-500`} type="button">
           prev
         </button>
