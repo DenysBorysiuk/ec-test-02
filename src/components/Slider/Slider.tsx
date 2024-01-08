@@ -50,6 +50,10 @@ const Slider = ({
             pagination: false,
             slidesPerView: 3,
             spaceBetween: 24,
+            navigation: {
+              nextEl: `.button-next-${section}`,
+              prevEl: `.button-prev-${section}`,
+            },
           },
         }}
 
