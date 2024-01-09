@@ -20,6 +20,8 @@
   position: static !important;
   margin-top: 24px;
   line-height: 0;
+
+  @apply md:hidden md:mt-0;
 }
 
 .swiper-pagination-bullet {
@@ -32,9 +34,9 @@
   opacity: 1 !important;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
   .swiper-pagination {
     display: none;
     margin-top: 0;
   }
-}
+} */
