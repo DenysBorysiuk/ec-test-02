@@ -26,6 +26,7 @@ const Slider = ({
       loop={true}
       modules={[Navigation, Pagination]}
       speed={800}
+      allowTouchMove={true}
       pagination={{ clickable: true }}
       navigation={{
         nextEl: `.button-next-${section}`,
@@ -34,8 +35,6 @@ const Slider = ({
       breakpoints={{
         320: {
           slidesPerView: 1,
-          grabCursor: true,
-          allowTouchMove: true,
         },
         768: {
           slidesPerView: 2,

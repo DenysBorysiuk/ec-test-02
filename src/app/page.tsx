@@ -10,14 +10,12 @@ export default function Home() {
     <main className="">
       <section className="mx-auto container">
         <h1>slider</h1>
-        <Btn section="services" direction="prev" />
-        <Btn section="services" direction="next" />
+        <Btn section="services"  />
         <Slider component={Card} data={[1, 2, 3, 4, 5, 6]} section="services" />
 
         <div className="py-[50px]" />
 
-        <Btn section="reviews" direction="prev" />
-        <Btn section="reviews" direction="next" />
+        <Btn section="reviews" />
 
         <Slider
           component={Slide}
