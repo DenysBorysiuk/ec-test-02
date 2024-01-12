@@ -35,6 +35,7 @@ const Slider = ({
         320: {
           slidesPerView: 1,
           allowTouchMove: true,
+          spaceBetween: 16,
         },
         768: {
           slidesPerView: 2,
@@ -45,6 +46,7 @@ const Slider = ({
         1280: {
           slidesPerView: 3,
           spaceBetween: spaceBetweenXl,
+          allowTouchMove: false,
         },
       }}
     >
