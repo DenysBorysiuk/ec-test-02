@@ -1,0 +1,1793 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pets-project",
+    "description": "help to find/release pet"
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https://pets-back-end.onrender.com/api" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Notices",
+      "description": "Notices endpoints"
+    },
+    {
+      "name": "Pets",
+      "description": "Pets endpoints"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "user registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationOrLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User found"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "user's login",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationOrLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Password or email not valid"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "user's logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success logout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "description": "define current user and his pets",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "put": {
+        "tags": ["Auth"],
+        "description": "uptade user's information",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/": {
+      "get": {
+        "tags": ["Notices"],
+        "description": "get notices by name",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": true
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticesByNameResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/user": {
+      "get": {
+        "tags": ["Notices"],
+        "description": "get all notices from user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoriteNoticesOrUserNoticesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/notice/{id}": {
+      "get": {
+        "tags": ["Notices"],
+        "description": "get notices by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "id of notice"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticeByIdResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/favorite": {
+      "get": {
+        "tags": ["Notices"],
+        "description": "find by title notices among favorite",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoriteNoticesOrUserNoticesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/category": {
+      "post": {
+        "tags": ["Notices"],
+        "description": "add notice in appropriate category",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "required": true,
+            "description": "category of notice"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoticeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNoticeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/favorite/{noticeId}": {
+      "patch": {
+        "tags": ["Notices"],
+        "description": "add notice to favorite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "description": "id of notice"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToFavoriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddToFavoriteResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "You have already added this notice to your favorites"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Notices"],
+        "description": "delete notice from favorite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "description": "id of notice"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteFromFavoriteResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/{noticeId}": {
+      "delete": {
+        "tags": ["Notices"],
+        "description": "delete notice",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "description": "id of notice"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteNoticeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+
+    "/pets/": {
+      "post": {
+        "tags": ["Pets"],
+        "description": "add new pet",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPetResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Pet found"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/pets/{petId}": {
+      "delete": {
+        "tags": ["Pets"],
+        "description": "delete pet by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "description": "id of pet"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletePetResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/news/our-news": {
+      "get": {
+        "tags": ["News"],
+        "description": "get news from site owners",
+        "security": [],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNewsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationOrLoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "user's password",
+            "example": "qwe123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "user's password",
+            "example": "qwe123"
+          },
+          "_id": {
+            "type": "string",
+            "description": "user's id",
+            "example": "21232134214"
+          },
+          "token": {
+            "type": "string",
+            "description": "user's authorization token",
+            "example": "21232134214dtghfxdhreh_cyjfgnvdz"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "exact time of request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "exact time of update request",
+            "example": "2023-05-28T12:47:09.056Z"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "description": "user's information",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "user's email",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "description": "user's password",
+                "example": "qwe123"
+              },
+              "_id": {
+                "type": "string",
+                "description": "user's id",
+                "example": "21232134214"
+              },
+              "token": {
+                "type": "string",
+                "description": "user's authorization token",
+                "example": "21232134214dtghfxdhreh_cyjfgnvdz"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "exact time of request",
+                "example": "2023-05-28T12:47:09.056Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "exact time of update request",
+                "example": "2023-05-28T12:47:09.056Z"
+              }
+            }
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Succes logout"
+          }
+        }
+      },
+      "UpdateRequest": {
+        "type": "object",
+        "properties": {
+          "avatarURL": {
+            "type": "string",
+            "description": "user's avatar",
+            "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685276441/iumbyiutbevhbiublwsy.jpg"
+          },
+          "name": {
+            "type": "string",
+            "description": "user's name",
+            "example": "Ondatra"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "user's day of birth",
+            "example": "18.09.1995"
+          },
+          "phone": {
+            "type": "string",
+            "description": "user's phone number",
+            "example": "+3801231212"
+          },
+          "city": {
+            "type": "string",
+            "description": "user's location",
+            "example": "Kyiv"
+          }
+        }
+      },
+      "UpdateResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "user's password",
+            "example": "qwe123"
+          },
+          "_id": {
+            "type": "string",
+            "description": "user's id",
+            "example": "21232134214"
+          },
+          "token": {
+            "type": "string",
+            "description": "user's authorization token",
+            "example": "21232134214dtghfxdhreh_cyjfgnvdz"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "exact time of request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "exact time of update request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "user's avatar",
+            "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685276441/iumbyiutbevhbiublwsy.jpg"
+          },
+          "name": {
+            "type": "string",
+            "description": "user's name",
+            "example": "Ondatra"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "user's day of birth",
+            "example": "18.09.1995"
+          },
+          "phone": {
+            "type": "string",
+            "description": "user's phone number",
+            "example": "+3801231212"
+          },
+          "city": {
+            "type": "string",
+            "description": "user's location",
+            "example": "Kyiv"
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "userInfo": {
+            "type": "object",
+            "description": "info about the user",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "user's email",
+                "format": "email"
+              },
+              "_id": {
+                "type": "string",
+                "description": "user's id",
+                "example": "21232134214"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "user's day of birth",
+                "example": "18.09.1995"
+              },
+              "name": {
+                "type": "string",
+                "description": "user's name",
+                "example": "Ondatra"
+              },
+              "phone": {
+                "type": "string",
+                "description": "user's phone number",
+                "example": "+3801231212"
+              },
+              "city": {
+                "type": "string",
+                "description": "user's location",
+                "example": "Kyiv"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "user's avatar",
+                "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685276441/iumbyiutbevhbiublwsy.jpg"
+              }
+            }
+          },
+          "petsInfo": {
+            "type": "array",
+            "description": "info about user's pets",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "pet's id",
+                  "example": "21232134214"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "pet's name",
+                  "example": "Doggy"
+                },
+                "dateOfBirth": {
+                  "type": "string",
+                  "description": "pet's birthday",
+                  "example": "12.05.2020"
+                },
+                "breed": {
+                  "type": "string",
+                  "description": "pet's breed",
+                  "example": "street dog"
+                },
+                "imgURL": {
+                  "type": "string",
+                  "description": "user's avatar",
+                  "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685276688/kipjbjdh1cx68bouputu.jpg"
+                },
+                "comments": {
+                  "type": "string",
+                  "description": "anything about pet",
+                  "example": "Сute and good pet dog"
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "owner of pet",
+                  "example": "646b9e402ce63de4e0c09505"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "exact time of request",
+                  "example": "2023-05-28T12:47:09.056Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "exact time of update request",
+                  "example": "2023-05-28T12:47:09.056Z"
+                },
+                "__v": {
+                  "type": "string",
+                  "description": "version",
+                  "example": "0"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetNoticesByNameResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "totalNotices": {
+                "type": "integer",
+                "example": "21"
+              },
+              "page": {
+                "type": "integer",
+                "example": "1"
+              },
+              "totalPages": {
+                "type": "integer",
+                "example": "3"
+              },
+              "currentOnPage": {
+                "type": "integer",
+                "example": "12"
+              },
+              "notices": {
+                "type": "array",
+                "description": "notices by name",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "notice's id",
+                      "example": "21232134214"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Kitty"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Cat"
+                    },
+                    "category": {
+                      "type": "string",
+                      "example": "for-free"
+                    },
+                    "dateOfBirth": {
+                      "type": "string",
+                      "example": "05.05.2015"
+                    },
+                    "place": {
+                      "type": "string",
+                      "example": "Lviv"
+                    },
+                    "breed": {
+                      "type": "string",
+                      "example": "uknown"
+                    },
+                    "sex": {
+                      "type": "string",
+                      "example": "girl"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "example": "Maybe, it's your new friend?"
+                    },
+                    "imgURL": {
+                      "type": "string",
+                      "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685278404/pfjftq95jjtggurjuavm.jpg"
+                    },
+                    "favorite": {
+                      "type": "array",
+                      "example": "[]"
+                    },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "description": "user's email",
+                          "format": "email"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "user's name",
+                          "example": "OYOYOYO"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "description": "user's id",
+                          "example": "21232134214"
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "exact time of request",
+                      "example": "2023-05-28T12:47:09.056Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "exact time of update request",
+                      "example": "2023-05-28T12:47:09.056Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetNoticeByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "notice": {
+                "type": "object",
+                "description": "notice by id",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "notice's id",
+                    "example": "21232134214"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Kitty"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Cat"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "for-free"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "example": "05.05.2015"
+                  },
+                  "place": {
+                    "type": "string",
+                    "example": "Lviv"
+                  },
+                  "breed": {
+                    "type": "string",
+                    "example": "uknown"
+                  },
+                  "sex": {
+                    "type": "string",
+                    "example": "girl"
+                  },
+                  "comments": {
+                    "type": "string",
+                    "example": "Maybe, it's your new friend?"
+                  },
+                  "imgURL": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685278404/pfjftq95jjtggurjuavm.jpg"
+                  },
+                  "favorite": {
+                    "type": "array",
+                    "example": "[]"
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "description": "user's email",
+                        "format": "email"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "user's name",
+                        "example": "OYOYOYO"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "user's id",
+                        "example": "21232134214"
+                      }
+                    }
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "exact time of request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "exact time of update request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FavoriteNoticesOrUserNoticesResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "totalNotices": {
+                "type": "integer",
+                "example": "0"
+              },
+              "page": {
+                "type": "integer",
+                "example": "1"
+              },
+              "totalPages": {
+                "type": "integer",
+                "example": "1"
+              },
+              "currentOnPage": {
+                "type": "integer",
+                "example": "1"
+              },
+              "notices": {
+                "type": "array",
+                "example": "[]"
+              }
+            }
+          }
+        }
+      },
+      "AddNoticeRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Kitty"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cat"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "05.05.2015"
+          },
+          "place": {
+            "type": "string",
+            "example": "Lviv"
+          },
+          "breed": {
+            "type": "string",
+            "example": "uknown"
+          },
+          "sex": {
+            "type": "string",
+            "example": "girl"
+          },
+          "comments": {
+            "type": "string",
+            "example": "Maybe, it's your new friend?"
+          },
+          "price": {
+            "type": "string",
+            "example": "for free"
+          }
+        }
+      },
+      "AddNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Kitty"
+          },
+          "category": {
+            "type": "string",
+            "example": "sell"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cat"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "05.05.2015"
+          },
+          "place": {
+            "type": "string",
+            "example": "Lviv"
+          },
+          "breed": {
+            "type": "string",
+            "example": "uknown"
+          },
+          "sex": {
+            "type": "string",
+            "example": "girl"
+          },
+          "comments": {
+            "type": "string",
+            "example": "Maybe, it's your new friend?"
+          },
+          "price": {
+            "type": "string",
+            "example": "for free"
+          },
+          "favorite": {
+            "type": "array",
+            "example": "[]"
+          },
+          "_id": {
+            "type": "string",
+            "description": "notice's id",
+            "example": "21232134214"
+          },
+          "owner": {
+            "type": "string",
+            "description": "owner of pet",
+            "example": "646b9e402ce63de4e0c09505"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "exact time of request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "exact time of update request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "__v": {
+            "type": "string",
+            "description": "version",
+            "example": "0"
+          }
+        }
+      },
+      "AddToFavoriteRequest": {
+        "type": "object",
+        "properties": {
+          "favorite": {
+            "type": "boolean",
+            "example": "true"
+          }
+        }
+      },
+      "AddToFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Kitty"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "sell"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Cat"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "example": "05.05.2015"
+                  },
+                  "imgURL": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685278404/pfjftq95jjtggurjuavm.jpg"
+                  },
+                  "place": {
+                    "type": "string",
+                    "example": "Lviv"
+                  },
+                  "breed": {
+                    "type": "string",
+                    "example": "uknown"
+                  },
+                  "sex": {
+                    "type": "string",
+                    "example": "girl"
+                  },
+                  "comments": {
+                    "type": "string",
+                    "example": "Maybe, it's your new friend?"
+                  },
+                  "price": {
+                    "type": "string",
+                    "example": "for free"
+                  },
+                  "favorite": {
+                    "type": "array",
+                    "example": "[]"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "notice's id",
+                    "example": "21232134214"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "owner of pet",
+                    "example": "646b9e402ce63de4e0c09505"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "exact time of request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "exact time of update request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  },
+                  "__v": {
+                    "type": "string",
+                    "description": "version",
+                    "example": "0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeleteFromFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "notice deleted from favorites"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Kitty"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "sell"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Cat"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "example": "05.05.2015"
+                  },
+                  "imgURL": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685278404/pfjftq95jjtggurjuavm.jpg"
+                  },
+                  "place": {
+                    "type": "string",
+                    "example": "Lviv"
+                  },
+                  "breed": {
+                    "type": "string",
+                    "example": "uknown"
+                  },
+                  "sex": {
+                    "type": "string",
+                    "example": "girl"
+                  },
+                  "comments": {
+                    "type": "string",
+                    "example": "Maybe, it's your new friend?"
+                  },
+                  "price": {
+                    "type": "string",
+                    "example": "for free"
+                  },
+                  "favorite": {
+                    "type": "array",
+                    "example": "[]"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "notice's id",
+                    "example": "21232134214"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "owner of pet",
+                    "example": "646b9e402ce63de4e0c09505"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "exact time of request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "exact time of update request",
+                    "example": "2023-05-28T12:47:09.056Z"
+                  },
+                  "__v": {
+                    "type": "string",
+                    "description": "version",
+                    "example": "0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeleteNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "notice deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Kitty"
+              },
+              "category": {
+                "type": "string",
+                "example": "sell"
+              },
+              "name": {
+                "type": "string",
+                "example": "Cat"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "05.05.2015"
+              },
+              "imgURL": {
+                "type": "string",
+                "example": "https://res.cloudinary.com/dpa3xbrjh/image/upload/v1685278404/pfjftq95jjtggurjuavm.jpg"
+              },
+              "place": {
+                "type": "string",
+                "example": "Lviv"
+              },
+              "breed": {
+                "type": "string",
+                "example": "uknown"
+              },
+              "sex": {
+                "type": "string",
+                "example": "girl"
+              },
+              "comments": {
+                "type": "string",
+                "example": "Maybe, it's your new friend?"
+              },
+              "price": {
+                "type": "string",
+                "example": "for free"
+              },
+              "favorite": {
+                "type": "array",
+                "example": "[]"
+              },
+              "_id": {
+                "type": "string",
+                "description": "notice's id",
+                "example": "21232134214"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of pet",
+                "example": "646b9e402ce63de4e0c09505"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "exact time of request",
+                "example": "2023-05-28T12:47:09.056Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "exact time of update request",
+                "example": "2023-05-28T12:47:09.056Z"
+              },
+              "__v": {
+                "type": "string",
+                "description": "version",
+                "example": "0"
+              }
+            }
+          }
+        }
+      },
+      "AddPetRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Cat"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "05.05.2015"
+          },
+          "breed": {
+            "type": "string",
+            "example": "uknown"
+          },
+          "imgURL": {
+            "type": "string",
+            "example": "https://www.spokojenypes.cz/ImgP.ashx?co=/ImgGalery/img1/clanky/blog-pes-zrak.png&fd=u2&pa=1"
+          }
+        }
+      },
+      "AddPetResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Cat"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "05.05.2015"
+          },
+          "breed": {
+            "type": "string",
+            "example": "uknown"
+          },
+          "imgURL": {
+            "type": "string",
+            "example": "https://www.spokojenypes.cz/ImgP.ashx?co=/ImgGalery/img1/clanky/blog-pes-zrak.png&fd=u2&pa=1"
+          },
+          "owner": {
+            "type": "string",
+            "description": "owner of pet",
+            "example": "646b9e402ce63de4e0c09505"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "exact time of request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "exact time of update request",
+            "example": "2023-05-28T12:47:09.056Z"
+          },
+          "__v": {
+            "type": "string",
+            "description": "version",
+            "example": "0"
+          },
+          "_id": {
+            "type": "string",
+            "description": "user's id",
+            "example": "21232134214"
+          }
+        }
+      },
+      "DeletePetResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Cat"
+              },
+              "dateOfBirth": {
+                "type": "string",
+                "example": "05.05.2015"
+              },
+              "breed": {
+                "type": "string",
+                "example": "uknown"
+              },
+              "imgURL": {
+                "type": "string",
+                "example": "https://www.spokojenypes.cz/ImgP.ashx?co=/ImgGalery/img1/clanky/blog-pes-zrak.png&fd=u2&pa=1"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of pet",
+                "example": "646b9e402ce63de4e0c09505"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "exact time of request",
+                "example": "2023-05-28T12:47:09.056Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "exact time of update request",
+                "example": "2023-05-28T12:47:09.056Z"
+              },
+              "__v": {
+                "type": "string",
+                "description": "version",
+                "example": "0"
+              },
+              "_id": {
+                "type": "string",
+                "description": "user's id",
+                "example": "21232134214"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "example": "pet deleted"
+          }
+        }
+      },
+      "GetNewsResponse": {
+        "type": "object",
+        "properties": {
+          "news": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "122323544654"
+                },
+                "img": {
+                  "type": "string",
+                  "example": "https://liftlearning.com/wp-content/uploads/2020/09/default-image.png"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "itle for post"
+                },
+                "desk": {
+                  "type": "string",
+                  "example": "Description for post"
+                },
+                "date": {
+                  "type": "string",
+                  "example": "15/02/2022"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

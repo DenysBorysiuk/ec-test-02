@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pets Project
 
-## Getting Started
+This project is provided with convenient and simple for understanding RESTful API built with Node.js and Express.
+It provides a powerful solution for managing data resources in web, with support for basic CRUD functionality using GET, POST, PATCH, PUT and DELETE methods. It supports such authentication methods, as JWT to keep data secure and private.
 
-First, run the development server:
+## Tools:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Pets Project is built using the following tools:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- MongoDB
+- Express.js
+- Node.js
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To install Pet Project, follow these steps:
 
-## Learn More
+Clone the Pets Project repository to your local machine using git clone https://github.com/olekspyl/pets-back-end
+Navigate to the project directory using cd.
+Install dependencies using npm install.
+Create a .env file and add:
 
-To learn more about Next.js, take a look at the following resources:
+1. your MongoDB connection string. Example: mongodb+srv://something
+2. your BASE_URL connection string. Example: http://localhost:3001
+3. your PORT. Example: 3001
+4. your SECRET_KEY for authorization. Example: CUUqmchjyfW
+5. your CLOUDINARY_NAME (example: jya3xbrih), CLOUDINARY_KEY (example: 6458678898900) and CLOUDINARY_SECRET (example: f7kw5wWcJVPGLschgnffjvjmmVoT4r5c) for saving pictures at Cloudinary service.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the server using npm start.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Clone Repo
 
-## Deploy on Vercel
+To clone this repository, use one of the following links:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+HTTPS: https://github.com/olekspyl/pets-back-end.git
+GitHub CLI: gh repo clone olekspyl/pets-back-end
