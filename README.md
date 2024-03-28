@@ -15,7 +15,7 @@ Pets Project is built using the following tools:
 
 To install Pet Project, follow these steps:
 
-Clone the Pets Project repository to your local machine using git clone https://github.com/olekspyl/pets-back-end
+Clone the Pets Project repository to your local machine using git clone
 Navigate to the project directory using cd.
 Install dependencies using npm install.
 Create a .env file and add:
@@ -28,9 +28,3 @@ Create a .env file and add:
 
 Start the server using npm start.
 
-#### Clone Repo
-
-To clone this repository, use one of the following links:
-
-HTTPS: https://github.com/olekspyl/pets-back-end.git
-GitHub CLI: gh repo clone olekspyl/pets-back-end
